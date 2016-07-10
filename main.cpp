@@ -170,7 +170,7 @@ void llenarColumna ( bool *columna1, bool *columna2, bool *columnaResultante, in
 }
 
 int main(int argc, char **argv){
-	int cantProp = 3;
+	int cantProp = 4;
 	
 	//cout << " Ingrese una cantidad de proposiciones mayor a 3\n";
 	// Le pido al usuario que ingrese cuantas proposiciones va a utilizar. No menos de 3 por la consigna e.e 
@@ -193,7 +193,7 @@ int main(int argc, char **argv){
 	}
 	
 	
-	char proposiciones[] = { 'P', 'Q', 'R'};
+	char proposiciones[] = { 'P', 'Q', 'R', 'S'};
 	// INICIO DIBUJO TABLA.
 	for ( int i = 0; i < cantProp; i++){
 		cout << proposiciones[i] << " | ";
@@ -210,7 +210,7 @@ int main(int argc, char **argv){
 	}
 	// FIN DIBUJO TABLA.
 	
-	int operador1, operador2;
+	int operador1, operador2, operador3;
 	string operadoresLogicos[] = { "^", "v", "=>", "<=>", "_V_"};
 	
 	cout << "\n Operadores Logicos: \n";
@@ -221,17 +221,21 @@ int main(int argc, char **argv){
 	cout << "\n\n Que operador desea poner entre P y Q?: ";
 	cin >> operador1;
 	
-	cout << "\n Que operador desa poner entre ( P " << operadoresLogicos[operador1 - 1] << " Q ) y R?: ";
+	cout << "\n\n Que operador desea poner entre R y S?: ";
 	cin >> operador2;
 	
-	cout << "\n Resultador = ( P " << operadoresLogicos[operador1 - 1] << " Q ) " << operadoresLogicos[operador2 - 1] << " R" << endl;
+	cout << "\n Que operador desa poner entre ( P " << operadoresLogicos[operador1 - 1] << " Q ) y ( R " << operadoresLogicos[operador2 - 1] << " S )?: ";
+	cin >> operador3;
+	
+	cout << "\n Resultado = ( P " << operadoresLogicos[operador1 - 1] << " Q ) " << operadoresLogicos[operador3 - 1] << " ( R " << operadoresLogicos[operador2 - 1] << " S )" << endl;
 	
 	
-	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[3], operador1, cantFilas );
-	llenarColumna( tablaDeVerdad[3], tablaDeVerdad[2], tablaDeVerdad[4], operador2, cantFilas );
+	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[4], operador1, cantFilas );
+	llenarColumna( tablaDeVerdad[2], tablaDeVerdad[3], tablaDeVerdad[5], operador2, cantFilas );
+	llenarColumna( tablaDeVerdad[4], tablaDeVerdad[5], tablaDeVerdad[6], operador3, cantFilas );
 	
 	for ( int y = 0; y < cantFilas; y++ ){
-		for ( int x = 0; x < ( cantProp + 2 ); x++){
+		for ( int x = 0; x < ( cantProp + 3 ); x++){
 			cout << tablaDeVerdad[x][y] << " | ";
 		}
 		cout << endl;
