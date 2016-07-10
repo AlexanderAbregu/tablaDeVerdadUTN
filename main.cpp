@@ -169,6 +169,20 @@ void llenarColumna ( bool *columna1, bool *columna2, bool *columnaResultante, in
 	}
 }
 
+string tipoProposicion ( bool *columnaFinal, int cantidadFilas){
+	int resultado = 0;
+	for ( int  i = 0; i < cantidadFilas; i++ ){
+		resultado +=*(columnaFinal+i);
+	}
+	if ( resultado == 0){
+		return "Contradiccion";
+	} else if ( resultado >= 1 && resultado < cantidadFilas ){
+		return "Contingencia";
+	} else {
+		return "Tautologia";
+	}
+}
+
 int main(int argc, char **argv){
 	int cantProp = 4;
 	
@@ -240,6 +254,8 @@ int main(int argc, char **argv){
 		}
 		cout << endl;
 	}
+	
+	cout << "\n La proposiscion es una " << tipoProposicion( tablaDeVerdad[6], cantFilas ) << endl,
 	
 	cout << "\n\nFINNNNNNNNNNNNNNN" <<endl;
 	system("pause");
