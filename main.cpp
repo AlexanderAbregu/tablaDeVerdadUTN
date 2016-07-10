@@ -2,6 +2,9 @@
 #include <windows.h> //Agregado para cambiar el color
 #include <conio.h> //Para el getch...
 #include <cmath> //Funciones matematicas: sqrt
+#include <string>
+
+#define ARRAY_SIZE( array ) ( sizeof( ( array ) ) / sizeof( ( array[0] ) ) )
 
 using namespace std;
 
@@ -12,7 +15,6 @@ using namespace std;
 				P = [V,F,V,F,V,F,V,F]
 				Q = [V,V,F,F,V,V,F,F]
 				R = [V,V,V,V,F,F,F,F]
-			Como se puede ver la ultima proposicion cambia de valor cada a la mitad de la tabla
 */
 int cambiarCada (int numeroProp){
 	int resultado = 1;
@@ -36,35 +38,111 @@ void llenarBasicoArray ( bool *tablaDeVerdad, int numeroProp, int cantidadFilas)
 		ingresar = !ingresar;
 	}while( cantidadIngresado < cantidadFilas );
 }
-   
-int main(int argc, char **argv){
-	int cantProp = 0;
+
+int operadorY (int p1, int p2){
+	if( p1 && p2 ){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int operadorO (int p1, int p2){
+	if( p1 || p2){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int operadorEntonces (int p1, int p2){
+	if ( !p1 ){
+		return true;
+	} else if ( p2 ){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int operadorSii (int p1, int p2){
+	if ( p1 == p2 ){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int operadorOEx (int p1, int p2){
+	if ( p1 != p2 ){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void llenarColumna ( bool *columna1, bool *columna2, bool *columnaResultante, int operacionLogica){
 	
-	cout << " Ingrese una cantidad de proposiciones mayor a 3\n";
+}
+
+int main(int argc, char **argv){
+	int cantProp = 3;
+	
+	//cout << " Ingrese una cantidad de proposiciones mayor a 3\n";
 	// Le pido al usuario que ingrese cuantas proposiciones va a utilizar. No menos de 3 por la consigna e.e 
+	/*
 	while ( cantProp < 3 ){
 		cout << " Cantidad de proposiciones = ";
 		cin >> cantProp;
 	}
-	
+	*/
 	// La cantidad de combinaciones que se pueden dar es igual a  2 elevado Cantidad de Proposiciones.
 		// Ejemplo: Si tenemos 3 proposiciones ( P, Q y R ) existen 2^3 combinaciones osea 8 combinaciones.
 	int cantFilas = pow ( 2, cantProp );
 
-	bool tablaDeVerdad[cantProp][cantFilas];
+	// Se crea la tabla.
+	bool tablaDeVerdad[cantProp + 2][cantFilas];
 	
+	// Se establecen los valores de las proposiciones simples.
 	for ( int i = 0; i < cantProp; i++){
 		llenarBasicoArray( tablaDeVerdad[i] , ( i + 1 ), cantFilas);
 	}
-			
+	
+	
+	char proposiciones[] = { 'P', 'Q', 'R'};
+	// INICIO DIBUJO TABLA.
+	for ( int i = 0; i < cantProp; i++){
+		cout << proposiciones[i] << " | ";
+	}
+	
+	cout << "\n---------------\n"; 
+	
 	for ( int y = 0; y < cantFilas; y++ ){
 		for ( int x = 0; x < cantProp; x++){
-			cout << "[" << x << "][" << y << "] = \t" << tablaDeVerdad[x][y] << " | ";
+			//cout << "[" << x << "][" << y << "] = \t" << tablaDeVerdad[x][y] << " | ";
+			cout << tablaDeVerdad[x][y] << " | ";
 		}
 		cout << endl;
 	}
-		
-	cout << "FINNNNNNNNNNNNNNN" <<endl;
+	// FIN DIBUJO TABLA.
+	
+	int operador1, operador2;
+	string operadoresLogicos[] = { "^", "v", "=>", "<=>", "_V_"};
+	
+	cout << "\n Operadores Logicos: \n";
+	for ( int i = 0; i < ARRAY_SIZE(operadoresLogicos); i++){
+		cout << "\n\t Operador " << operadoresLogicos[i] << "\t: " << ( i + 1);
+	}
+	
+	cout << "\n\n Que operador desea poner entre P y Q?: ";
+	cin >> operador1;
+	
+	cout << "\n Que operador desa poner entre ( P " << operadoresLogicos[operador1 - 1] << " Q ) y R?: ";
+	cin >> operador2;
+	
+	cout << "\n Resultador = ( P " << operadoresLogicos[operador1 - 1] << " Q ) " << operadoresLogicos[operador2 - 1] << " R" << endl;
+	
+	cout << "\n\nFINNNNNNNNNNNNNNN" <<endl;
 	system("pause");
 	return 0;
 }
