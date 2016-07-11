@@ -4,6 +4,7 @@
 #include <cmath> //Funciones matematicas: sqrt
 #include <string>
 
+// Retorna la cantidad de elementos en el array.
 #define ARRAY_SIZE( array ) ( sizeof( ( array ) ) / sizeof( ( array[0] ) ) )
 
 using namespace std;
@@ -169,6 +170,13 @@ void llenarColumna ( bool *columna1, bool *columna2, bool *columnaResultante, in
 	}
 }
 
+/*
+	Suma todos los valores de un array y en base a su resultado retorna el tipo de proposicion compuesta que es.
+	Ya que los falsos son iguales a 0, y los verdaderos a 1. 
+	Si la suma de todos los valores es igual al tamaño del array significa que todos son 1, por ende todos verdaderos por ende tautologia.
+	Si la suma da 0 significa que todos sus valores son 0, por ende son falsos, por ende es una contradiccion.
+	Si la suma es mayor a 0 pero menor a la cantidad total de elementos significa que no esta lleno ni de 1 ni de 0, por ende contingencia.
+*/
 string tipoProposicion ( bool *columnaFinal, int cantidadFilas){
 	int resultado = 0;
 	for ( int  i = 0; i < cantidadFilas; i++ ){
@@ -186,29 +194,21 @@ string tipoProposicion ( bool *columnaFinal, int cantidadFilas){
 int main(int argc, char **argv){
 	int cantProp = 4;
 	
-	//cout << " Ingrese una cantidad de proposiciones mayor a 3\n";
-	// Le pido al usuario que ingrese cuantas proposiciones va a utilizar. No menos de 3 por la consigna e.e 
-	/*
-	while ( cantProp < 3 ){
-		cout << " Cantidad de proposiciones = ";
-		cin >> cantProp;
-	}
-	*/
 	// La cantidad de combinaciones que se pueden dar es igual a  2 elevado Cantidad de Proposiciones.
 		// Ejemplo: Si tenemos 3 proposiciones ( P, Q y R ) existen 2^3 combinaciones osea 8 combinaciones.
 	int cantFilas = pow ( 2, cantProp );
 
-	// Se crea la tabla.
+	// Se crea la tabla, que en realidad es un array bidimensional.
 	bool tablaDeVerdad[cantProp + 2][cantFilas];
 	
-	// Se establecen los valores de las proposiciones simples.
-	for ( int i = 0; i < cantProp; i++){
+	// Se establecen los valores de las proposiciones simples. (En este caso seria: P, Q, R y S.)
+		// Se le pasa solo las "columnas" que contienen las proposiciones simples.
+	for ( int i = 0; i < cantProp; i++ ){
 		llenarBasicoArray( tablaDeVerdad[i] , ( i + 1 ), cantFilas);
 	}
 	
-	
-	char proposiciones[] = { 'P', 'Q', 'R', 'S'};
 	// INICIO DIBUJO TABLA.
+	/*
 	for ( int i = 0; i < cantProp; i++){
 		cout << proposiciones[i] << " | ";
 	}
@@ -222,9 +222,23 @@ int main(int argc, char **argv){
 		}
 		cout << endl;
 	}
+	*/
 	// FIN DIBUJO TABLA.
 	
-	int operador1, operador2, operador3;
+	/* 
+	En esta array, se almacenara el indice de operador logico elegido entre las distintas proposiciones.
+	 	Su tamaño se debe a que en este programa siempre en cantidad hay un operador logico menos la cantidad de proposiciones.
+		 	Ejemplo si tenemos 4 proposiciones simples: P, Q, R y S
+			 	La proposicion compuesta quedaria como: ( P ol Q ) ol ( R ol S ). ol = Algun operador logico.
+	*/
+	int cantidadOperadores = ( cantProp - 1 );
+	
+	int operadores[cantidadOperadores];
+	
+	// Nombre de las proposiciones simples. ( Solo 4 por ahora... )
+	char proposiciones[] = { 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W' };
+	
+	// Para representar en la consola con simbolos similares a los utilizados en Matematica Discreta.
 	string operadoresLogicos[] = { "^", "v", "=>", "<=>", "_V_"};
 	
 	cout << "\n Operadores Logicos: \n";
@@ -232,21 +246,26 @@ int main(int argc, char **argv){
 		cout << "\n\t Operador " << operadoresLogicos[i] << "\t: " << ( i + 1);
 	}
 	
-	cout << "\n\n Que operador desea poner entre P y Q?: ";
-	cin >> operador1;
+	string textoOp1 = string( 1, proposiciones[0] );
+	string textoOp2 = string( 1, proposiciones[1] );
 	
-	cout << "\n\n Que operador desea poner entre R y S?: ";
-	cin >> operador2;
+	for ( int i = 0; i < cantidadOperadores; i++ ){
+		cout << "\n Que operador logico desea poner entre ( " << textoOp1 << " y " << textoOp2 << " )?: ";
+		cin >> operadores[i];
+		
+		textoOp1 = "( " + textoOp1 + " " + operadoresLogicos[operadores[i] - 1] + " " +textoOp2 + " )";
+		
+		if( ( i + 2 ) < cantProp){
+			textoOp2 = proposiciones[i + 2];
+		}
+	}
+		
+	cout << "\n Resultado = " << textoOp1 << endl;
 	
-	cout << "\n Que operador desa poner entre ( P " << operadoresLogicos[operador1 - 1] << " Q ) y ( R " << operadoresLogicos[operador2 - 1] << " S )?: ";
-	cin >> operador3;
 	
-	cout << "\n Resultado = ( P " << operadoresLogicos[operador1 - 1] << " Q ) " << operadoresLogicos[operador3 - 1] << " ( R " << operadoresLogicos[operador2 - 1] << " S )" << endl;
-	
-	
-	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[4], operador1, cantFilas );
-	llenarColumna( tablaDeVerdad[2], tablaDeVerdad[3], tablaDeVerdad[5], operador2, cantFilas );
-	llenarColumna( tablaDeVerdad[4], tablaDeVerdad[5], tablaDeVerdad[6], operador3, cantFilas );
+	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[4], operadores[0], cantFilas );
+	llenarColumna( tablaDeVerdad[2], tablaDeVerdad[3], tablaDeVerdad[5], operadores[1], cantFilas );
+	llenarColumna( tablaDeVerdad[4], tablaDeVerdad[5], tablaDeVerdad[6], operadores[2], cantFilas );
 	
 	for ( int y = 0; y < cantFilas; y++ ){
 		for ( int x = 0; x < ( cantProp + 3 ); x++){
