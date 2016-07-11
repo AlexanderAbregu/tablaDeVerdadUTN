@@ -262,10 +262,24 @@ int main(int argc, char **argv){
 		
 	cout << "\n Resultado = " << textoOp1 << endl;
 	
+	int valor = 0;
+	
+	for ( int i = 0; i < cantidadOperadores; i++ ){
+		llenarColumna( tablaDeVerdad[valor], tablaDeVerdad[i + 1], tablaDeVerdad[cantProp + i], operadores[i], cantFilas );
+		
+		if ( i == 0){
+			valor = cantidadOperadores;
+		}
+		
+		valor++;
+	}
+	
+	/*
 	
 	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[4], operadores[0], cantFilas );
 	llenarColumna( tablaDeVerdad[2], tablaDeVerdad[3], tablaDeVerdad[5], operadores[1], cantFilas );
 	llenarColumna( tablaDeVerdad[4], tablaDeVerdad[5], tablaDeVerdad[6], operadores[2], cantFilas );
+	*/
 	
 	for ( int y = 0; y < cantFilas; y++ ){
 		for ( int x = 0; x < ( cantProp + 3 ); x++){
