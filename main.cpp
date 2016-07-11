@@ -249,10 +249,9 @@ int main(int argc, char **argv){
 			 	La proposicion compuesta quedaria como: ( P ol Q ) ol ( R ol S ). ol = Algun operador logico.
 	*/
 	int cantidadOperadores = ( cantProp - 1 );
-	
 	int operadores[cantidadOperadores];
 	
-	// Nombre de las proposiciones simples.
+	// Nombre de las proposiciones simples (desde 3 hasta 5 proposiciones).
 	char proposiciones[] = { 'P', 'Q', 'R', 'S', 'T' };
 	
 	// Para representar en la consola con simbolos similares a los utilizados en Matematica Discreta.
@@ -269,9 +268,11 @@ int main(int argc, char **argv){
 	}
 	cout << endl;
 	
+	// Estas dos variables string contienen las propociones a medida que se van armando.
 	string textoOp1 = string( 1, proposiciones[0] );
 	string textoOp2 = string( 1, proposiciones[1] );
 	
+	// Pide al usuario que ingrese los operadores logicos entre las proposiciones.
 	for ( int i = 0; i < cantidadOperadores; i++ ){
 		cout << "\n Que operador logico desea poner entre ( ";
 		color(1);
@@ -287,21 +288,25 @@ int main(int argc, char **argv){
 		cin >> operadores[i];
 		color(3);
 		
+		// Como se ve la proposicion para el usuario.
 		textoOp1 = "( " + textoOp1 + " " + operadoresLogicos[operadores[i] - 1] + " " +textoOp2 + " )";
 		
+		// Siempre que pueda tomar una proposicion simple mas...
 		if( ( i + 2 ) < cantProp){
 			textoOp2 = proposiciones[i + 2];
 		}
 	}
 	
+	// Muestro en un modo agradabele para el usuario toda la proposicion compuesta.
 	cout << "\n\n\tOperacion compuesta resultante: "; color(6); cout << textoOp1 << endl; color(3);
 	cout << "\t-------------------------------" << endl;
 	
+	// Se usa en el siguiente for para saber que columnas tomar de la tabla de verdad.
 	int indice = 0;
-	
 	for ( int i = 0; i < cantidadOperadores; i++ ){
 		llenarColumna( tablaDeVerdad[indice], tablaDeVerdad[i + 1], tablaDeVerdad[cantProp + i], operadores[i], cantFilas );
 		
+		// La primera vez tiene que tomar como primer parametro la columna 0 pero despues es en base a las columnas que se generan.
 		if ( i == 0){
 			indice = cantidadOperadores;
 		}
@@ -311,6 +316,7 @@ int main(int argc, char **argv){
 	
 	cout << "\n\n";
 	
+	// Muestro la tabla de verdad.
 	for ( int y = 0; y < cantFilas; y++ ){
 		cout << "\t\t";
 		for ( int x = 0; x < ( ( ( 2 * cantProp ) - 1 ) ); x++){
