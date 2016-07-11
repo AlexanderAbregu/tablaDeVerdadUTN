@@ -192,7 +192,12 @@ string tipoProposicion ( bool *columnaFinal, int cantidadFilas){
 }
 
 int main(int argc, char **argv){
-	int cantProp = 4;
+	int cantProp = 0;
+	
+	do{
+		cout << " Cantidad de proposiciones simples ( Mayor o igual que 3 y menor o igual a 5): ";
+		cin >> cantProp;
+	}while( ( cantProp < 3 ) || ( cantProp > 5 ) );
 	
 	// La cantidad de combinaciones que se pueden dar es igual a  2 elevado Cantidad de Proposiciones.
 		// Ejemplo: Si tenemos 3 proposiciones ( P, Q y R ) existen 2^3 combinaciones osea 8 combinaciones.
@@ -207,24 +212,6 @@ int main(int argc, char **argv){
 		llenarBasicoArray( tablaDeVerdad[i] , ( i + 1 ), cantFilas);
 	}
 	
-	// INICIO DIBUJO TABLA.
-	/*
-	for ( int i = 0; i < cantProp; i++){
-		cout << proposiciones[i] << " | ";
-	}
-	
-	cout << "\n---------------\n"; 
-	
-	for ( int y = 0; y < cantFilas; y++ ){
-		for ( int x = 0; x < cantProp; x++){
-			//cout << "[" << x << "][" << y << "] = \t" << tablaDeVerdad[x][y] << " | ";
-			cout << tablaDeVerdad[x][y] << " | ";
-		}
-		cout << endl;
-	}
-	*/
-	// FIN DIBUJO TABLA.
-	
 	/* 
 	En esta array, se almacenara el indice de operador logico elegido entre las distintas proposiciones.
 	 	Su tamaño se debe a que en este programa siempre en cantidad hay un operador logico menos la cantidad de proposiciones.
@@ -235,8 +222,8 @@ int main(int argc, char **argv){
 	
 	int operadores[cantidadOperadores];
 	
-	// Nombre de las proposiciones simples. ( Solo 4 por ahora... )
-	char proposiciones[] = { 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W' };
+	// Nombre de las proposiciones simples.
+	char proposiciones[] = { 'P', 'Q', 'R', 'S', 'T' };
 	
 	// Para representar en la consola con simbolos similares a los utilizados en Matematica Discreta.
 	string operadoresLogicos[] = { "^", "v", "=>", "<=>", "_V_"};
@@ -274,15 +261,8 @@ int main(int argc, char **argv){
 		valor++;
 	}
 	
-	/*
-	
-	llenarColumna( tablaDeVerdad[0], tablaDeVerdad[1], tablaDeVerdad[4], operadores[0], cantFilas );
-	llenarColumna( tablaDeVerdad[2], tablaDeVerdad[3], tablaDeVerdad[5], operadores[1], cantFilas );
-	llenarColumna( tablaDeVerdad[4], tablaDeVerdad[5], tablaDeVerdad[6], operadores[2], cantFilas );
-	*/
-	
 	for ( int y = 0; y < cantFilas; y++ ){
-		for ( int x = 0; x < ( cantProp + 3 ); x++){
+		for ( int x = 0; x < ( ( ( 2 * cantProp ) - 1 ) ); x++){
 			cout << tablaDeVerdad[x][y] << " | ";
 		}
 		cout << endl;
