@@ -208,6 +208,15 @@ string tipoProposicion ( bool *columnaFinal, int cantidadFilas){
 	}
 }
 
+// Retorna V si se le pasa un 1, y F si se le pasa un 0. Para que la tabla quede mas similar a una tabla de Matematica Discreta.
+char vof ( int valor ){
+	if( valor ){
+		return 'V';
+	}else{
+		return 'F';
+	}
+}
+
 int main(int argc, char **argv){
 	color(8);
 	cout<<"\t Proposicion Compuesta.\n";
@@ -320,7 +329,7 @@ int main(int argc, char **argv){
 	for ( int y = 0; y < cantFilas; y++ ){
 		cout << "\t\t";
 		for ( int x = 0; x < ( ( ( 2 * cantProp ) - 1 ) ); x++){
-			cout << " | " << tablaDeVerdad[x][y] << " | ";
+			cout << " | " << vof( tablaDeVerdad[x][y] ) << " | ";
 		}
 		cout << endl;
 	}
@@ -328,7 +337,7 @@ int main(int argc, char **argv){
 	cout << "\n La proposiscion es una " << tipoProposicion( tablaDeVerdad[6], cantFilas ) << "." <<endl,
 	
 	color(8);
-	cout << "\n\n(Las primeras " << cantProp << " columnas corresponden a las proposiciones simples y la ultima columna corresponde a " << textoOp1 << " ). " << endl;
+	cout << "\n\n(Las primeras " << cantProp << " columnas corresponden a las proposiciones simples y la ultima columna corresponde a " << textoOp1 << " ).\n\n";
 	system("pause");
 	return 0;
 }
