@@ -116,7 +116,7 @@ int operadorO (int p1, int p2){
 
 /* 
 	Operacion Logica: Entonces. 
-		Retorna true, si: El primer valor (p1) es falso ó Los dos valores (p1 y p2) son verdaderos.
+		Retorna true, si: El primer valor (p1) es falso ï¿½ Los dos valores (p1 y p2) son verdaderos.
 */
 int operadorEntonces (int p1, int p2){
 	if ( !p1 ){
@@ -133,11 +133,7 @@ int operadorEntonces (int p1, int p2){
 		Retorna true, si los valores son iguales.
 */
 int operadorSii (int p1, int p2){
-	if ( p1 == p2 ){
-		return true;
-	} else {
-		return false;
-	}
+	return ( p1 == p2 );
 }
 
 /* 
@@ -145,11 +141,7 @@ int operadorSii (int p1, int p2){
 		Retorna true, si los valores son distitnos.
 */
 int operadorOEx (int p1, int p2){
-	if ( p1 != p2 ){
-		return true;
-	} else {
-		return false;
-	}
+	return (p1 != p2);
 }
 
 /*
@@ -190,7 +182,7 @@ void llenarColumna ( bool *columna1, bool *columna2, bool *columnaResultante, in
 /*
 	Suma todos los valores de un array y en base a su resultado retorna el tipo de proposicion compuesta que es.
 	Ya que los falsos son iguales a 0, y los verdaderos a 1. 
-	Si la suma de todos los valores es igual al tamaño del array significa que todos son 1, por ende todos verdaderos por ende tautologia.
+	Si la suma de todos los valores es igual al tamaï¿½o del array significa que todos son 1, por ende todos verdaderos por ende tautologia.
 	Si la suma da 0 significa que todos sus valores son 0, por ende son falsos, por ende es una contradiccion.
 	Si la suma es mayor a 0 pero menor a la cantidad total de elementos significa que no esta lleno ni de 1 ni de 0, por ende contingencia.
 */
@@ -253,7 +245,7 @@ int main(int argc, char **argv){
 	
 	/* 
 	En esta array, se almacenara el indice de operador logico elegido entre las distintas proposiciones.
-	 	Su tamaño se debe a que en este programa siempre en cantidad hay un operador logico menos la cantidad de proposiciones.
+	 	Su tamaï¿½o se debe a que en este programa siempre en cantidad hay un operador logico menos la cantidad de proposiciones.
 		 	Ejemplo si tenemos 4 proposiciones simples: P, Q, R y S
 			 	La proposicion compuesta quedaria como: ( P ol Q ) ol ( R ol S ). ol = Algun operador logico.
 	*/
